@@ -8,7 +8,7 @@ from PyQt5.QtCore import QObject, pyqtSignal
 
 # Считывание настроек из файла
 config = configparser.ConfigParser()
-config.read("settings.ini")
+config.read("D:\dev\Bluetooth-LED-Control\settings.ini")
 ADDRESS = config["Settings"]["address"]
 CHARACTERISTIC_UUID = config["Settings"]["characteristic_uuid"]
 TURN_ON = bytes((0x00, 0x04, 0x80, 0x00, 0x00, 0x0d, 0x0e, 0x0b, 0x3b, 0x23, 0x00,
@@ -32,10 +32,8 @@ class BluetoothDevice(QObject):
                 await self.client.connect(timeout=10)
                 self.connected = True
                 self.connection_changed.emit(True)
-                print("Connected to Bluetooth device")
                 break
             except (BleakError, asyncio.TimeoutError) as e:
-                traceback.print_exc()  # Выводит полную трассировку исключения
                 self.connection_changed.emit(False)
                 await asyncio.sleep(5)
 
