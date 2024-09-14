@@ -1,7 +1,5 @@
 .idea
 __pycache__
-icon.webp
-icon.ico
 build
 dist
 LedControl.spec

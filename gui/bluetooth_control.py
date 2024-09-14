@@ -5,7 +5,7 @@ import sys
 import qasync
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QFont, QColor
+from PyQt5.QtGui import QFont, QColor, QIcon
 from PyQt5.QtWidgets import QWidget, QPushButton, QVBoxLayout, QLabel, QHBoxLayout
 
 from gui.color_wheel import ColorWheel
@@ -76,7 +76,8 @@ class BluetoothControl(QWidget):
         layout.addWidget(self.buttonToggle)
 
         self.setLayout(layout)
-        self.setWindowTitle('Bluetooth Control')
+        self.setWindowTitle('Bluetooth Led Control')
+        self.setWindowIcon(QIcon(self.resource_path("static/icon.png")))
         self.setGeometry(300, 300, 400, 500)
         self.setStyleSheet("background-color: #1e1e1e; border-radius: 10px; color: white;")
 
@@ -158,3 +159,9 @@ class BluetoothControl(QWidget):
         with loop:
             loop.create_task(self.bluetooth_device.connect())
             sys.exit(loop.run_forever())
+
+    @staticmethod
+    def resource_path(relative_path):
+        """ Получить абсолютный путь к ресурсу, работает для dev и для PyInstaller """
+        base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+        return os.path.join(base_path, relative_path)
